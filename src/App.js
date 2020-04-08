@@ -50,8 +50,40 @@ const App = () => {
         setDecimalText(convertToDecimal);
     };
 
-    const decimalToBinary = () => {
-        // TODO
+    const decimalToBinary = (event) => {
+        let enterdValue = parseInt(event.target.value);
+
+        if (isEmpty(enterdValue)) {
+            clearInput();
+            return;
+        }
+
+        if (isNaN(enterdValue)) {
+            setErrorMessage('You can only enter Decimal');
+            return;
+        }
+
+        if (enterdValue === 0) {
+            setBinaryText(0);
+            setDecimalText(0);
+            return;
+        }
+
+        setDecimalText(enterdValue);
+
+        const remainders = [];
+
+        while (Math.floor(enterdValue) > 0) {
+            remainders.push(enterdValue % 2);
+            enterdValue = Math.floor(enterdValue / 2);
+        }
+
+        remainders.reverse();
+
+        const reducer = (accumulator, currentValue) => accumulator + currentValue.toString();
+        const convertToBinary = remainders.reduce(reducer);
+
+        setBinaryText(convertToBinary);
     };
 
     return (
@@ -67,7 +99,6 @@ const App = () => {
             <div>
                 <Label>Decimal:</Label>
                 <Input
-                    disabled
                     value={decimalText}
                     onChange={decimalToBinary}
                 />
