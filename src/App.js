@@ -18,12 +18,14 @@ const App = () => {
     };
 
     const binaryToDecimal = event => {
-        const enterdValue = event.target.value;
 
-        if (isEmpty(enterdValue)) {
+        // Check value is not empty
+        if (isEmpty(event.target.value)) {
             clearInput();
             return;
         }
+
+        const enterdValue = event.target.value;
 
         // Invalid value
         if (!enterdValue.match(/^[0-1]+$/)) {
@@ -51,25 +53,28 @@ const App = () => {
     };
 
     const decimalToBinary = (event) => {
-        let enterdValue = parseInt(event.target.value);
 
-        if (isEmpty(enterdValue)) {
+        // Check value is not empty
+        if (isEmpty(event.target.value)) {
             clearInput();
             return;
         }
 
+        let enterdValue = parseInt(event.target.value);
+
+        // Check value is Number
         if (isNaN(enterdValue)) {
             setErrorMessage('You can only enter Decimal');
             return;
         }
 
+        setDecimalText(enterdValue);
+
+        // If value is 0, binaray equals 0 too
         if (enterdValue === 0) {
             setBinaryText(0);
-            setDecimalText(0);
             return;
         }
-
-        setDecimalText(enterdValue);
 
         const remainders = [];
 
